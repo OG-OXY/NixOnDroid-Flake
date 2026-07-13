@@ -12,7 +12,7 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixcats.url = "github:BirdeeHub/nixCats-nvim";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
     #nvf.url = "path:./flakes/NVF";
     #nixvim = {
     #  url = "github:nix-community/nixvim";
@@ -54,7 +54,10 @@
 	           inherit self inputs;
 	           herdr = inputs.herdr.packages.aarch64-linux.default;
 	         };
-	         #sharedModules = [ inputs.nixvim.homeModules.nixvim ];
+	         sharedModules = [
+	           inputs.nixCats.homeModules.default
+	           #inputs.nixvim.homeModules.nixvim 
+	         ];
          };
         }
       ];
