@@ -12,6 +12,9 @@
     PATH = "$HOME/.local/bin:$PATH";
     EDITOR = "vis";
     VISUAL = "vis";
+    ANTHROPIC_BASE_URL = "http://localhost:8080";
+    ANTHROPIC_API_KEY = "local";
+    ANTHROPIC_AUTH_TOKEN = "local";
   };
 
   # System PKGS.

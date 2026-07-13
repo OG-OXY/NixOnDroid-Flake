@@ -16,6 +16,13 @@
       #source = inputs.astronvim.packages.${pkgs.system}.nix-on-droid;
       #recursive = true;
     #};
+    ".claude/settings.json".text = ''
+      {
+        "env": {
+          "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
+        }
+      }
+    '';
     ".bash_profile".text = ''
       if [[ -z "$FISH_ALREADY_STARTED" ]]; then
       export FISH_ALREADY_STARTED=1
@@ -28,6 +35,9 @@
       source = ./modules/home/NVIM;
       recursive = true;
     };
+  };
+  home.shellAliases = {
+    start-claude = "claude --model ggml-org/Qwen2.5-Coder-7B-Instruct-Q8_0-GGUF:Q8_0";
   };
   home.packages = (with pkgs; [
     #PKGS

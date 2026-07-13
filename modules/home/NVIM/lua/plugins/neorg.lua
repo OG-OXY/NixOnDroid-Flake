@@ -14,7 +14,8 @@ return {
         ["core.norg.dirman"] = { -- Manages your notes
           config = {
             workspaces = {
-              notes = "~/Documents/norg/notes", -- Make sure this directory exists on your device
+              notes = "~/sdcard/Documents/norg/notes", -- Make sure this directory exists on your device
+
             },
           },
         },

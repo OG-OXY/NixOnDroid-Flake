@@ -29,6 +29,23 @@
           eval (command -v sshd) -p 8022 -f /dev/null -h ~/.ssh/ssh_host_ed25519_key -o "StrictModes=no" -o "UsePAM=no" -o "AuthorizedKeysFile=~/.ssh/authorized_keys"
         '';
       };
+      start-llama = {
+        body = ''
+          ${pkgs.llama-cpp}/bin/llama-server \
+            -m ~/.cache/llama.cpp/ggml-org_Qwen2.5-Coder-7B-Instruct-Q8_0-GGUF_qwen2.5-coder-7b-instruct-q8_0.gguf \
+            --n-gpu-layers 33 \
+            --threads 8 \
+            --port 8080 $argv
+        '';
+      };
+      start-claude = {
+        description = "Launch Claude CLI with local model";
+        body = ''
+          set -x ANTHROPIC_BASE_URL "http://localhost:8080"
+          set -x ANTHROPIC_API_KEY "local"
+          claude --model Qwen2.5-Coder-7B-Instruct-Q8_0 $argv
+        '';
+      };
     };
 
     shellAbbrs = {
