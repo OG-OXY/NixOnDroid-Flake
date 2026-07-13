@@ -12,6 +12,7 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    #nixcats.url = "";
     nvf.url = "path:./flakes/NVF";
     nixvim = {
       url = "github:nix-community/nixvim";

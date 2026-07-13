@@ -8,15 +8,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-rcjgfKu1tD5iiumZE2oxqBPuDVyjdDkqH+8FPLcmXdc=",
         "path": "./flakes/AstroNvim",
         "type": "path"
       },
       "original": {
         "path": "./flakes/AstroNvim",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "astrovim": {
       "flake": false,
@@ -304,15 +303,14 @@
         "nvf": "nvf_2"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-2f4BFiGbs0IYJKlIVvaSrrWbWNqzdbY3MeWkuMHrOuE=",
         "path": "./flakes/NVF",
         "type": "path"
       },
       "original": {
         "path": "./flakes/NVF",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "nvf_2": {
       "inputs": {
