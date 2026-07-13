@@ -8,15 +8,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-rcjgfKu1tD5iiumZE2oxqBPuDVyjdDkqH+8FPLcmXdc=",
         "path": "./flakes/AstroNvim",
         "type": "path"
       },
       "original": {
         "path": "./flakes/AstroNvim",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "astrovim": {
       "flake": false,
