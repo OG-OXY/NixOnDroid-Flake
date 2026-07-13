@@ -1,0 +1,123 @@
+{
+  description = "Ty's Portable Declarative NVF Configuration";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nvf.url = "github:NotAShelf/nvf";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
+  };
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nvf,
+    }:
+    let
+      supportedSystems = [ "aarch64-linux" ];
+      forEachSystem = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
+    in
+    {
+      packages = forEachSystem (system: {
+        default =
+          let
+            pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+              overlays = [
+                (final: prev: {
+                  vimPlugins = prev.vimPlugins.extend (
+                    self: super: {
+                      markdown-preview-nvim = super.markdown-preview-nvim.overrideAttrs (_: {
+                        dontUnpack = true;
+                        dontBuild = true;
+                      });
+                      nvim-lint = super.nvim-lint.overrideAttrs (_: {
+                        dontBuild = true;
+                        dontUnpack = true;
+                      });
+                    }
+                  );
+                })
+              ];
+            };
+            myNvim =
+              (nvf.lib.neovimConfiguration {
+                inherit pkgs;
+                modules = [
+                  {
+                    vim.viAlias = false;
+                    vim.vimAlias = false;
+                    vim.theme = {
+                      enable = true;
+                      name = "gruvbox";
+                      style = "dark";
+                      transparent = false;
+                    };
+                    vim.visuals = {
+                      cinnamon-nvim.enable = true;
+                      nvim-web-devicons.enable = true;
+                      nvim-cursorline.enable = true;
+                    };
+                    vim.statusline.lualine.enable = true;
+                    vim.autocomplete.blink-cmp.enable = false;
+                    vim.autocomplete.nvim-cmp.enable = true;
+                    vim.lsp = {
+                      enable = true;
+                      formatOnSave = true;
+                      lspkind.enable = true;
+                      lightbulb.enable = true;
+                      trouble.enable = true;
+                    };
+                    vim.treesitter = {
+                      enable = true;
+                      autotagHtml = true;
+                    };
+                    vim.telescope.enable = true;
+                    vim.git.gitsigns.enable = true;
+                    vim.utility.preview.markdownPreview.enable = false;
+                    vim.filetree.neo-tree.enable = true;
+                    vim.tabline.nvimBufferline.enable = true;
+                    vim.dashboard.alpha.enable = true;
+                    vim.binds.whichKey.enable = true;
+                    vim.terminal.toggleterm = {
+                      enable = true;
+                      lazygit.enable = true;
+                    };
+                    vim.notes.neorg.enable = true;
+                    vim.languages = {
+                      enableTreesitter = true;
+                      enableFormat = true;
+                      enableExtraDiagnostics = false;
+                      nix.enable = true;
+                      lua.enable = true;
+                      fish.enable = true;
+                      bash.enable = true;
+                      json.enable = true;
+                      toml.enable = true;
+                      yaml.enable = true;
+                      xml.enable = true;
+                      css.enable = true;
+                      nim.enable = true;
+                      markdown.enable = true;
+                    };
+                    vim.options = {
+                      shiftwidth = 2;
+                      tabstop = 2;
+                      smartcase = true;
+                      ignorecase = true;
+                      mouse = "a";
+                    };
+                  }
+                ];
+              }).neovim;
+          in {
+     ▏ ▏     packages.${system}.default = pkgs.symlinkJoin {
+   ▏ ▏ ▏       name = "nvf-wrapped";
+     ▏ ▏ ▏ ▏   paths = [ customNeovim.neovim ];
+               postBuild = ''
+                 ln -s $out/bin/nvim $out/bin/nvf
+               '';
+             };
+           };
+        });
+      };
+}
