@@ -4,19 +4,18 @@
   home.username = "nix-on-droid";
   home.homeDirectory = "/data/data/com.termux.nix/files/home";
   home.stateVersion = "25.11";
-  
   imports = [
     ./modules/home/activation.nix
     ./modules/home/fish.nix
+    #./modules/home/nixCats.nix
     #./modules/home/nixvim.nix
     ./modules/home/fastfetch.nix
   ];
-  
   home.file = {
-    ".config/nvim" = {
-      source = inputs.astronvim.packages.${pkgs.system}.nix-on-droid;
-      recursive = true;
-    };
+    #".config/nvim" = {
+      #source = inputs.astronvim.packages.${pkgs.system}.nix-on-droid;
+      #recursive = true;
+    #};
     ".bash_profile".text = ''
       if [[ -z "$FISH_ALREADY_STARTED" ]]; then
       export FISH_ALREADY_STARTED=1
@@ -24,10 +23,14 @@
       fi
     '';
   };
-  
+  xdg.configFile = {
+    "nvim" = {
+      source = ./modules/home/NVIM;
+      recursive = true;
+    };
+  };
   home.packages = (with pkgs; [
     #PKGS
-    
   ]) ++ [
       #inputs.herdr.packages.aarch64-linux.default
   ];

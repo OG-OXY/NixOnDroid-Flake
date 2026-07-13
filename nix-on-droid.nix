@@ -10,8 +10,8 @@
 
   environment.sessionVariables = {
     PATH = "$HOME/.local/bin:$PATH";
-    EDITOR = "nvim";
-    VISUAL = "nvim";
+    EDITOR = "vis";
+    VISUAL = "vis";
   };
 
   # System PKGS.
@@ -23,17 +23,18 @@
     openssh
     claude-code
     llama-cpp
+    tree
+    dysk
+    btop
     # Neovim LSP, Linters, and Formatters.
     tree-sitter
     pyright
     black
-    nil
     nixd
     nix
     nixfmt
     lua-language-server
     stylua
-    alejandra
     nodePackages.vscode-langservers-extracted
     nodePackages.prettier
     marksman
@@ -69,6 +70,7 @@
     zip
     unzip
   ]) ++ [
+    #inputs.nixCats.packages.aarch64-linux.default
     #inputs.nvf.packages.aarch64-linux.default
   ];
 

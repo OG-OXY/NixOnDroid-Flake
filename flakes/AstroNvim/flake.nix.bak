@@ -1,6 +1,6 @@
 {
   description = "AstroNvim Flake";
-
+  
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     astrovim = {
@@ -13,11 +13,20 @@
   let
     system = "aarch64-linux";
     pkgs = import nixpkgs { inherit system; };
-  in
-  {
-    packages.${system}.nix-on-droid = pkgs.symlinkJoin {
-      name = "AstroNvim";
-      paths = [ astrovim self ];
+  in {
+    packages.${system}.nix-on-droid = pkgs.stdenv.mkDerivation {
+      pname = "AstroNvim";
+      version = "1.0";
+      src = ./.;
+      dontUnpack = true;
+      installPhase = ''
+        mkdir -p $out
+        cp -r ${astrovim}/* $out/
+        mkdir -p $out/lua
+        cp -r $src/lua/* $out/lua/
+        rm -f $out/flake.nix
+      '';
     };
   };
 }
+

@@ -12,16 +12,16 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    nixCats.url = "path:./flakes/nixCats";
     #nvf.url = "path:./flakes/NVF";
     #nixvim = {
     #  url = "github:nix-community/nixvim";
       #inputs.nixpkgs.follows = "nixpkgs";
     #};
-    astronvim = {
-      url = "path:./flakes/AstroNvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #astronvim = {
+      #url = "path:./flakes/AstroNvim";
+      #inputs.nixpkgs.follows = "nixpkgs";
+    #};
     #herdr.url = "path:./flakes/LLM-Agents_Herdr/";
   };
 
@@ -55,7 +55,7 @@
 	           herdr = inputs.herdr.packages.aarch64-linux.default;
 	         };
 	         sharedModules = [
-	           inputs.nixCats.homeModules.default
+	           #inputs.nixCats.homeModule
 	           #inputs.nixvim.homeModules.nixvim 
 	         ];
          };

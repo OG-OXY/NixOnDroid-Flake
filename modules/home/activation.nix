@@ -1,10 +1,10 @@
 { pkgs, config, lib, inputs, ... }: {
   home.activation = {
     linkStorageDirect = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      if [ ! -L "$HOME/storage" ]; then
-        $DRY_RUN_CMD mkdir -p "$HOME/storage"
-        $DRY_RUN_CMD rm -rf "$HOME/storage"
-        $DRY_RUN_CMD ln -s /sdcard "$HOME/storage/"
+      if [ ! -L "$HOME/sdcard" ]; then
+        $DRY_RUN_CMD mkdir -p "$HOME/sdcard"
+        $DRY_RUN_CMD rm -rf "$HOME/sdcard"
+        $DRY_RUN_CMD ln -s /sdcard "$HOME/sdcard/"
       fi
       if [ ! -L "$HOME/Downloads" ]; then
         $DRY_RUN_CMD mkdir -p "$HOME/Downloads"
@@ -49,4 +49,4 @@
       .
     '';
   };
-}
+}	
