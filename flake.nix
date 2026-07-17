@@ -12,7 +12,7 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixCats.url = "path:./flakes/nixCats";
+    #nixCats.url = "path:./flakes/nixCats";
     #nvf.url = "path:./flakes/NVF";
     #nixvim = {
     #  url = "github:nix-community/nixvim";

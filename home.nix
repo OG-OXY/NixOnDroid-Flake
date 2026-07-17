@@ -20,6 +20,7 @@
       {
         "env": {
           "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
+        "theme": "dark"
         }
       }
     '';
