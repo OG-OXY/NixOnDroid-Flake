@@ -1,108 +1,115 @@
-{ pkgs, config, lib, inputs, ... }: {
-  
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}:
+{
   # 1. State environment
-  home.username = "nix-on-droid";
-  home.homeDirectory = "/data/data/com.termux.nix/files/home";
-  home.stateVersion = "25.11";
+  home = {
+    username = "nix-on-droid";
+    homeDirectory = "/data/data/com.termux.nix/files/home";
+    stateVersion = "25.11";
+    shellAliases = {
+      start-claude = "claude --model ggml-org/Qwen2.5-Coder-7B-Instruct-Q8_0-GGUF:Q8_0";
+    };
+    file = {
+      ".claude/settings.json".text = ''
+        {
+          "env": {
+            "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
+          "theme": "dark"
+          }
+        }
+      '';
+      ".bash_profile".text = ''
+        if [[ -z "$FISH_ALREADY_STARTED" ]]; then
+        export FISH_ALREADY_STARTED=1
+        exec ${pkgs.fish}/bin/fish -l
+        fi
+      '';
+    };
+    packages =
+      (with pkgs; [
+        #PKGS
+      ])
+      ++ [
+        #inputs.herdr.packages.aarch64-linux.default
+      ];
+  };
+
   imports = [
     ./modules/home/activation.nix
     ./modules/home/fish.nix
-    #./modules/home/nixCats.nix
-    #./modules/home/nixvim.nix
+    ./modules/home/neovim.nix
     ./modules/home/fastfetch.nix
   ];
-  home.file = {
-    #".config/nvim" = {
-      #source = inputs.astronvim.packages.${pkgs.system}.nix-on-droid;
-      #recursive = true;
-    #};
-    ".claude/settings.json".text = ''
-      {
-        "env": {
-          "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
-        "theme": "dark"
-        }
-      }
-    '';
-    ".bash_profile".text = ''
-      if [[ -z "$FISH_ALREADY_STARTED" ]]; then
-      export FISH_ALREADY_STARTED=1
-      exec ${pkgs.fish}/bin/fish -l
-      fi
-    '';
-  };
-  xdg.configFile = {
-    "nvim" = {
-      source = ./modules/home/NVIM;
-      recursive = true;
-    };
-  };
-  home.shellAliases = {
-    start-claude = "claude --model ggml-org/Qwen2.5-Coder-7B-Instruct-Q8_0-GGUF:Q8_0";
-  };
-  home.packages = (with pkgs; [
-    #PKGS
-  ]) ++ [
-      #inputs.herdr.packages.aarch64-linux.default
-  ];
-  
-  programs.tmux = {
-    enable = true;
-  };
- 
-  programs.yazi = {
-    enable = true;
-    settings = {
-    };
-  };
 
-  programs.starship = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-  
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-
-  # 3. Global Declarative Git configuration
-  programs.git = {
-    settings = {
-      init.defaultBranch = "master";
-      safe.directory = "*";
-      user = {
-        name = "OG-OXY";       # <-- Change to your name
-        email = "ogoxy.yt@gmail.com"; # <-- Change to your email
+  xdg = {
+    configFile = {
+      "nvim" = {
+        source = ./modules/home/NVIM;
+        recursive = true;
       };
     };
+    dataFile = {
+      #
+    };
   };
 
-  programs.ssh = {
-    enable = true;
-    enableDefaultConfig = false;
-    matchBlocks = {
-      "NixOS" = {
-        hostname = "100.99.131.97";
-        port = 22;
-        user = "ty";
-        extraOptions = {
-          "StrictHostKeyChecking" = "no";
-          "UserKnownHostsFile" = "/dev/null";
+  programs = {
+    home-manager.enable = true;
+    tmux.enable = true;
+    yazi = {
+      enable = true;
+      settings = {
+        #.
+      };
+    };
+    starship = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+    git = {
+      settings = {
+        init.defaultbranch = "master";
+        safe.directory = "*";
+        user = {
+          name = "og-oxy"; # <-- change to your name
+          email = "ogoxy.yt@gmail.com"; # <-- change to your email
+        };
+      };
+    };
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      matchBlocks = {
+        "NixOS" = {
+          hostname = "100.99.131.97";
+          port = 22;
+          user = "ty";
+          extraOptions = {
+            "StrictHostKeyChecking" = "no";
+            "UserKnownHostsFile" = "/dev/null";
+          };
         };
       };
     };
   };
 
-  # 4. Home Manager self-activation toggle
-  programs.home-manager.enable = true;
-
-  services.gpg-agent = {
-    enable = true;
-    defaultCacheTtl = 1800;
-    enableSshSupport = true;
-    pinentry = {
-      package = pkgs.pinentry-curses;
+  services = {
+    gpg-agent = {
+      enable = true;
+      defaultCacheTtl = 1800;
+      enableSshSupport = true;
+      pinentry = {
+        package = pkgs.pinentry-curses;
+      };
     };
   };
 }

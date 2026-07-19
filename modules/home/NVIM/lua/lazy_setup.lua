@@ -19,18 +19,20 @@ require("lazy").setup({
   ui = { backdrop = 100 },
   performance = {
     rtp = {
-      -- disable some rtp plugins, add more to your liking
+      paths = {
+        vim.env.NVIM_TREESITTER_PARSERS,
+      },
       disabled_plugins = {
-        "gzip",
-        "netrwPlugin",
-        "tarPlugin",
-        "tohtml",
-        "zipPlugin",
+        --"gzip",
+        --"netrwPlugin",
+        --"tarPlugin",
+        --"tohtml",
+        --"zipPlugin",
       },
     },
   },
-rocks = {
-  enabled = false,
-  hererocks = false,
-},
+  rocks = {
+    enabled = false,
+    hererocks = false,
+  },
 } --[[@as LazyConfig]])

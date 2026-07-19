@@ -1,8 +1,8 @@
 {
   pkgs,
-  config,
-  lib,
-  inputs,
+  #config,
+  #lib,
+  #inputs,
   ...
 }:
 {
@@ -28,7 +28,6 @@
     packages =
       (with pkgs; [
         fish
-        neovim
         vis
         git
         openssh
@@ -79,6 +78,7 @@
         fd
         gnumake
         gcc
+        yarn
         nodejs
         ruby
         python3
