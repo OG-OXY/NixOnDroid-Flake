@@ -1,6 +1,5 @@
 return {
   "nvim-neorg/neorg",
-  build = false,
   lazy = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
