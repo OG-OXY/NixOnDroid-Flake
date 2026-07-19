@@ -1,26 +1,33 @@
 return {
   "nvim-neorg/neorg",
-  -- CRITICAL: This prevents Neovim from trying to compile on Android/Nix-on-Droid
-  build = false, 
-  dependencies = { 
+  build = false,
+  lazy = false,
+  dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
+    "nvim-neorg/lua-utils.nvim",
+    "pysan3/pathlib.nvim",
+    "nvim-neotest/nvim-nio",
   },
   config = function()
-    require("neorg").setup({
+    require("neorg").setup {
       load = {
-        ["core.defaults"] = {}, -- Loads default modules
-        ["core.norg.concealer"] = {}, -- Makes it look nice
-        ["core.norg.dirman"] = { -- Manages your notes
+        ["core.defaults"] = {},
+        ["core.concealer"] = {},
+        ["core.dirman"] = {
           config = {
             workspaces = {
-              notes = "~/sdcard/Documents/norg/notes", -- Make sure this directory exists on your device
-
+              notes = "~/sdcard/Documents/norg/notes",
             },
+            default_workspace = "notes",
+          },
+        },
+        ["core.keybinds"] = {
+          config = {
+            default_keybinds = false,
           },
         },
       },
-    })
+    }
   end,
 }
-

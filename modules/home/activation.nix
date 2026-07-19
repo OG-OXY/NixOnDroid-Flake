@@ -16,11 +16,6 @@
         $DRY_RUN_CMD rm -rf "$HOME/Documents"
         $DRY_RUN_CMD ln -s /sdcard/Documents "$HOME/Documents/"
       fi
-      if [ ! -L "$HOME/Documents/Taildrop" ]; then
-        $DRY_RUN_CMD mkdir -p "$HOME/Documents/Taildrop"
-        $DRY_RUN_CMD rm -rf "$HOME/Documents/Taildrop"
-        $DRY_RUN_CMD ln -s /sdcard/Taildrop "$HOME/Documents/Taildrop/"
-      fi
       if [ ! -L "$HOME/Media/Pictures" ]; then
         $DRY_RUN_CMD mkdir -p "$HOME/Media/Pictures"
         $DRY_RUN_CMD rm -rf "$HOME/Media/Pictures"
@@ -46,7 +41,6 @@
         $DRY_RUN_CMD rm -rf "$HOME/Media/Camera"
         $DRY_RUN_CMD ln -s /sdcard/DCIM "$HOME/Media/Camera/"
       fi
-      .
     '';
   };
 }	
