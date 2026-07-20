@@ -76,8 +76,10 @@
       ripgrep
       fd
       gnumake
-      gcc
+      clang
+      clang-tools
       rustc
+      rust-analyzer
       cargo
       yarn
       nodejs
